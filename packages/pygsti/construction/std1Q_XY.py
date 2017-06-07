@@ -16,15 +16,17 @@ description = "X(pi/2) and Y(pi/2) gates"
 gates = ['Gx','Gy']
 fiducials = _strc.gatestring_list( [ (), ('Gx',), ('Gy',), ('Gx','Gx'),
                                      ('Gx','Gx','Gx'), ('Gy','Gy','Gy') ] ) # for 1Q MUB
+prepStrs = effectStrs = fiducials
 
-germs = _strc.gatestring_list([('Gy',),
- ('Gy','Gy','Gy','Gx',),
- ('Gy','Gx','Gy','Gx','Gx','Gx',),
- ('Gy','Gx','Gy','Gy','Gx','Gx',),
- ('Gy','Gy','Gy','Gx','Gy','Gx',),
- ('Gx',),
- ('Gx','Gy',),
- ('Gx','Gx','Gy','Gx','Gy','Gy',)])
+germs = _strc.gatestring_list(
+    [ ('Gx',),
+      ('Gy',),
+      ('Gx','Gy',),
+      ('Gy','Gy','Gy','Gx',),
+      ('Gx','Gx','Gy','Gx','Gy','Gy',),
+      ('Gy','Gx','Gy','Gx','Gx','Gx',),
+      ('Gy','Gx','Gy','Gy','Gx','Gx',),
+      ('Gy','Gy','Gy','Gx','Gy','Gx',)] )
 
 #Construct a target gateset:  X(pi/2), Y(pi/2)
 gs_target = _setc.build_gateset([2],[('Q0',)], ['Gx','Gy'],

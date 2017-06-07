@@ -56,12 +56,13 @@ class RBTestCase(BaseTestCase):
             pre_avg=True, clifford_to_canonical = clifford_to_canonical,
             canonical_to_primitive = canonical_to_primitive)
 
-        rb_results.plot('clifford')
-        rb_results.plot('primitive')
-        rb_results.plot('primitive', xlim=(0,500), ylim=(0,1),
-                        save_fig_path=os.path.join(temp_files,'rb_test_plot.pdf'))
+        #Maybe move this to workspace tests?
+        w = pygsti.report.Workspace()
+        w.RandomizedBenchmarkingPlot(rb_results,'clifford')
+        w.RandomizedBenchmarkingPlot(rb_results,'primitive')
+        w.RandomizedBenchmarkingPlot(rb_results,'primitive', xlim=(0,500), ylim=(0,1))
         with self.assertRaises(ValueError):
-            rb_results.plot('foobar')
+            w.RandomizedBenchmarkingPlot(rb_results,'foobar')
 
         rb_results.print_clifford()
         rb_results.print_primitive()
@@ -69,10 +70,6 @@ class RBTestCase(BaseTestCase):
         gs_cliff_experimental = pygsti.construction.build_alias_gateset(
             gs_experimental,clifford_to_primitive)
 
-        analytic_rb_error_rate = rb.analytic_rb_clifford_gateset_error_rate(
-            gs_cliff_experimental, rb.std1Q.gs_clifford_target, rb.std1Q.clifford_group)
-
-        print("Analytic RB error rate:", analytic_rb_error_rate)
         print("Experimental RB error rate:", rb_results.dicts['clifford']['r'])
 
         rb_results.compute_bootstrap_error_bars(('clifford','primitive'),seed=0)
